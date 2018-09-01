@@ -1,0 +1,26 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+D:\Out_of_the_box\github_rep\8051_programs\Led\Polling_delay\polling_delay.uv2
+Project File Date:  09/01/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling polling_delay.c...
+linking...
+Program Size: data=9.0 xdata=0 code=56
+"polling_delay" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling polling_delay.c...
+linking...
+Program Size: data=9.0 xdata=0 code=56
+creating hex file from "polling_delay"...
+"polling_delay" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling polling_delay.c...
+linking...
+Program Size: data=9.0 xdata=0 code=56
+creating hex file from "polling_delay"...
+"polling_delay" - 0 Error(s), 0 Warning(s).
