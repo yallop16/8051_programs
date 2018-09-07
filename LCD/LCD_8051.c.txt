@@ -1,0 +1,51 @@
+//Program to test LCD. Display single character "A"
+
+#include<reg51.h>
+#define cmdport P3
+#define dataport P2
+#define q 100
+sbit rs = cmdport^0;  //register select pin
+sbit rw = cmdport^1;  // read write pin
+sbit e = cmdport^6;  //enable pin
+
+void delay(unsigned int msec)  // Function to provide time delay in msec.
+{
+int i,j ;
+for(i=0;i<msec;i++)
+for(j=0;j<1275;j++);
+}
+
+void lcdcmd(unsigned char item)  //Function to send command to LCD
+{
+dataport = item;
+rs= 0;
+rw=0;
+e=1;
+delay(1);
+e=0;
+}
+
+void lcddata(unsigned char item)  //Function to send data to LCD
+{
+dataport = item;
+rs= 1;
+rw=0;
+e=1;
+delay(1);
+e=0;
+}
+
+void main()
+{
+lcdcmd(0x38);  // for using 8-bit 2 row mode of LCD
+delay(100);
+lcdcmd(0x0E);  // turn display ON for cursor blinking
+delay(100);
+lcdcmd(0x01);  //clear screen
+delay(100);
+lcdcmd(0x06);  //display ON
+delay(100);
+lcdcmd(0x86);  // bring cursor to position 6 of line 1
+delay(100);
+lcddata('A');
+}
