@@ -1,0 +1,119 @@
+C51 COMPILER V8.18   TEMP                                                                  03/11/2017 21:25:43 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE TEMP
+OBJECT MODULE PLACED IN temp.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE temp.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          sbit en=P3^6;   
+   4          
+   5          sbit cs=P3^0;
+   6          sbit wr= P3^1;
+   7          sbit rd= P3^2;
+   8          sbit intr= P0^0;
+   9          char cel[]="TEMP IN CELSIUS";
+  10          
+  11          void delay(unsigned int time)  
+  12          {
+  13   1      unsigned int i,j;
+  14   1      for(i=0;i<time;i++)
+  15   1        for(j=0;j<5;j++);
+  16   1      }
+  17          
+  18          
+  19          void lcdcmd(unsigned char value)  
+  20          {
+  21   1      P1=value;
+  22   1      P3=0x40;
+  23   1      delay(50);
+  24   1      en=0;
+  25   1      delay(50);
+  26   1      return;
+  27   1      }
+  28          
+  29          void display(unsigned char value)  
+  30          {
+  31   1      P1=value;
+  32   1      P3=0x60;
+  33   1      delay(500);
+  34   1      en=0;
+  35   1      delay(50);
+  36   1      return;
+  37   1      }
+  38          
+  39          void lcdint(void)         
+  40          {
+  41   1         delay(15000);
+  42   1         display(0x30);
+  43   1         delay(4500);
+  44   1         display(0x30);
+  45   1         delay(300);
+  46   1         display(0x30);
+  47   1         delay(650);
+  48   1         lcdcmd(0x38);
+  49   1         lcdcmd(0x0F);
+  50   1         lcdcmd(0x01);
+  51   1         lcdcmd(0x06);
+  52   1         lcdcmd(0x80);
+  53   1      }
+  54          
+  55          void main()
+C51 COMPILER V8.18   TEMP                                                                  03/11/2017 21:25:43 PAGE 2   
+
+  56          {
+  57   1      unsigned int Adcvalue,Adcvalue1,i=0;
+  58   1      char ch1,ch2,ch3;
+  59   1      P0=0x01;
+  60   1      P1=0x00;              
+  61   1      P3=0x00;             
+  62   1      P2=0xFF;             
+  63   1      lcdint();
+  64   1      while (1){
+  65   2      delay(10000);
+  66   2      cs=0;                 
+  67   2      wr=0;                 
+  68   2      delay(10);
+  69   2      wr=1;                       
+  70   2      rd=1;                  
+  71   2      while(intr==1);            
+  72   2      rd=0;                     
+  73   2      Adcvalue=P2;
+  74   2      i=0;
+  75   2      while(cel[i]!='\0'){
+  76   3      display(cel[i]);
+  77   3      i++;
+  78   3      }
+  79   2      lcdcmd(0xC7);
+  80   2      ch1=Adcvalue/100;
+  81   2      if(ch1!=0)
+  82   2      display(ch1+0x30);
+  83   2      delay(100);
+  84   2      Adcvalue1=Adcvalue%100;
+  85   2      ch2=Adcvalue1/10;
+  86   2      display(ch2+0x30);
+  87   2      ch3=Adcvalue1-(ch2*10);
+  88   2      display(ch3+0x30);
+  89   2      delay(10000);
+  90   2      delay(10000);
+  91   2      delay(10000);
+  92   2      lcdcmd(0x01);
+  93   2      }
+  94   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    314    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
